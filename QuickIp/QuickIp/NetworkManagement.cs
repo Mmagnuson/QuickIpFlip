@@ -6,6 +6,7 @@ using System.Management;
 // http://stackoverflow.com/questions/209779/how-can-you-change-network-settings-ip-address-dns-wins-host-name-with-code
 // author : balexandre
 // a few modification have been made to extend the abilities of the class
+// https://docs.microsoft.com/en-us/windows/desktop/cimwin32prov/win32-networkadapterconfiguration
 
 namespace QuickIp
 {
@@ -13,9 +14,9 @@ namespace QuickIp
     {
         private static ManagementObjectCollection getOC()
         {
-
+            
             ManagementObjectSearcher objMC = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = 'TRUE'");
-            //ManagementObjectSearcher objMC = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration ");
+            //   ManagementObjectSearcher objMC = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration ");
             return objMC.Get();
         }
 
@@ -31,7 +32,6 @@ namespace QuickIp
             var objMOC = getOC();
             foreach (ManagementObject mo in objMOC)
             {
-                
                 nicInfo.Add(mo["MACAddress"].ToString(), mo["Description"].ToString());
             }
             return nicInfo;
@@ -71,6 +71,7 @@ namespace QuickIp
                     {
                         try
                         {
+                            
                             ManagementBaseObject EnableDHCPParams = objMO.GetMethodParameters("EnableDHCP");
                             var returnCodeObj = objMO.InvokeMethod("EnableDHCP", EnableDHCPParams, null);
                             //var tmp = Convert.ToInt32(returnCodeObj.Properties["ReturnValue"].Value); //return value that handles the response code of the action.
@@ -104,6 +105,8 @@ namespace QuickIp
                 {
                     try
                     {
+
+                       
                         ManagementBaseObject setIP;
                         ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
 
@@ -111,6 +114,8 @@ namespace QuickIp
                         newIP["SubnetMask"] = new string[] { subnet_mask };
 
                         setIP = objMO.InvokeMethod("EnableStatic", newIP, null);
+
+                        int yy = 0;
                     }
                     catch (Exception)
                     {
@@ -119,6 +124,12 @@ namespace QuickIp
                 }
             }
         }
+
+
+
+
+
+
 
         /// <summary>
         /// Set's a new Gateway address of the local machine
