@@ -14,6 +14,7 @@ namespace QuickIp.Profiles
 
         public Profile()
         {
+            DHCP = false;
             DNS = new List<DomainNameServer>();
             DefaultGateway = new List<Gateway>();
             IP = new List<IPAddress>();

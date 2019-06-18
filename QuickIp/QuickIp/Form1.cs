@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuickIp.Profiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -112,20 +113,39 @@ namespace QuickIp
 
         private void RbDNSDHCP_CheckedChanged(object sender, EventArgs e)
         {
-            if (RbDNSDHCP.Checked )
+            if (RbDNSDHCP.Checked)
             {
                 RbDNSStatic.Checked = false;
-
             }
-
-
         }
 
         private void RbDNSStatic_CheckedChanged(object sender, EventArgs e)
         {
+        }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Profile p = new Profile();
+            p.MAC = "2C:4D:54:EA:22:75";
+            p.Description = "Test Profile";
+            p.DHCP = false;
+            p.DNS.Add(new DomainNameServer("8.8.8.8"));
+            p.DefaultGateway.Add(new Gateway("192.168.0.1"));
+            p.IP.Add(new IPAddress("192.168.0.25", "255.255.255.0"));
+            p.IP.Add(new IPAddress("172.16.20.1", "255.255.255.0"));
 
+            ProfileLoader pl = new ProfileLoader();
+            pl.Save(p);
+        }
 
+        private void bntLoad_Click(object sender, EventArgs e)
+        {
+            ProfileLoader pl = new ProfileLoader();
+            var p = pl.Load();
+
+            pl.Apply(p);
+
+            int xxx = 0;
         }
     }
 }

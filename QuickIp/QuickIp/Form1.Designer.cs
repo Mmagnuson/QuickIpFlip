@@ -36,10 +36,18 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.dgIp = new System.Windows.Forms.DataGridView();
+            this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Subnet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbStaticIP = new System.Windows.Forms.GroupBox();
             this.RbStaticIP = new System.Windows.Forms.RadioButton();
             this.RbDHCP = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.RbDNSDHCP = new System.Windows.Forms.RadioButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.RbDNSStatic = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -47,24 +55,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblNetworkCard = new System.Windows.Forms.Label();
             this.cmbNetworkcards = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.RbDNSStatic = new System.Windows.Forms.RadioButton();
-            this.RbDNSDHCP = new System.Windows.Forms.RadioButton();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Subnet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSafe = new System.Windows.Forms.Button();
+            this.bntLoad = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgIp)).BeginInit();
             this.gbStaticIP.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.groupBox4.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStaticTest
@@ -79,7 +81,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1108, 300);
+            this.button2.Location = new System.Drawing.Point(1117, 248);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -130,6 +132,18 @@
             this.dgIp.Size = new System.Drawing.Size(300, 105);
             this.dgIp.TabIndex = 6;
             // 
+            // ip
+            // 
+            this.ip.HeaderText = "Address";
+            this.ip.Name = "ip";
+            this.ip.Width = 120;
+            // 
+            // Subnet
+            // 
+            this.Subnet.HeaderText = "Subnet";
+            this.Subnet.Name = "Subnet";
+            this.Subnet.Width = 120;
+            // 
             // gbStaticIP
             // 
             this.gbStaticIP.Controls.Add(this.RbStaticIP);
@@ -156,7 +170,6 @@
             // 
             // RbDHCP
             // 
-            this.RbDHCP.AutoEllipsis = true;
             this.RbDHCP.AutoSize = true;
             this.RbDHCP.Checked = true;
             this.RbDHCP.Location = new System.Drawing.Point(9, 3);
@@ -187,6 +200,70 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Profile";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.RbDNSDHCP);
+            this.panel2.Controls.Add(this.groupBox3);
+            this.panel2.Location = new System.Drawing.Point(14, 298);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(353, 189);
+            this.panel2.TabIndex = 20;
+            // 
+            // RbDNSDHCP
+            // 
+            this.RbDNSDHCP.AutoSize = true;
+            this.RbDNSDHCP.Checked = true;
+            this.RbDNSDHCP.Location = new System.Drawing.Point(9, 3);
+            this.RbDNSDHCP.Name = "RbDNSDHCP";
+            this.RbDNSDHCP.Size = new System.Drawing.Size(218, 17);
+            this.RbDNSDHCP.TabIndex = 9;
+            this.RbDNSDHCP.TabStop = true;
+            this.RbDNSDHCP.Tag = "dns";
+            this.RbDNSDHCP.Text = "Obtain DNS server address automatically";
+            this.RbDNSDHCP.UseVisualStyleBackColor = true;
+            this.RbDNSDHCP.CheckedChanged += new System.EventHandler(this.RbDNSDHCP_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.dataGridView2);
+            this.groupBox3.Controls.Add(this.RbDNSStatic);
+            this.groupBox3.Location = new System.Drawing.Point(3, 26);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(341, 151);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "IP ";
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(18, 32);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(300, 105);
+            this.dataGridView2.TabIndex = 6;
+            // 
+            // RbDNSStatic
+            // 
+            this.RbDNSStatic.AutoSize = true;
+            this.RbDNSStatic.Location = new System.Drawing.Point(6, 0);
+            this.RbDNSStatic.Name = "RbDNSStatic";
+            this.RbDNSStatic.Size = new System.Drawing.Size(215, 17);
+            this.RbDNSStatic.TabIndex = 10;
+            this.RbDNSStatic.TabStop = true;
+            this.RbDNSStatic.Tag = "dns";
+            this.RbDNSStatic.Text = "Use the following DNS server addresses";
+            this.RbDNSStatic.UseVisualStyleBackColor = true;
+            this.RbDNSStatic.CheckedChanged += new System.EventHandler(this.RbDNSStatic_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.RbDHCP);
+            this.panel1.Controls.Add(this.gbStaticIP);
+            this.panel1.Location = new System.Drawing.Point(14, 104);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(353, 188);
+            this.panel1.TabIndex = 19;
             // 
             // button4
             // 
@@ -249,52 +326,6 @@
             this.cmbNetworkcards.Size = new System.Drawing.Size(251, 21);
             this.cmbNetworkcards.TabIndex = 12;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.dataGridView2);
-            this.groupBox3.Controls.Add(this.RbDNSStatic);
-            this.groupBox3.Location = new System.Drawing.Point(3, 26);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(341, 151);
-            this.groupBox3.TabIndex = 11;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "IP ";
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(18, 32);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(300, 105);
-            this.dataGridView2.TabIndex = 6;
-            // 
-            // RbDNSStatic
-            // 
-            this.RbDNSStatic.AutoSize = true;
-            this.RbDNSStatic.Location = new System.Drawing.Point(6, 0);
-            this.RbDNSStatic.Name = "RbDNSStatic";
-            this.RbDNSStatic.Size = new System.Drawing.Size(215, 17);
-            this.RbDNSStatic.TabIndex = 10;
-            this.RbDNSStatic.TabStop = true;
-            this.RbDNSStatic.Tag = "dns";
-            this.RbDNSStatic.Text = "Use the following DNS server addresses";
-            this.RbDNSStatic.UseVisualStyleBackColor = true;
-            this.RbDNSStatic.CheckedChanged += new System.EventHandler(this.RbDNSStatic_CheckedChanged);
-            // 
-            // RbDNSDHCP
-            // 
-            this.RbDNSDHCP.AutoSize = true;
-            this.RbDNSDHCP.Checked = true;
-            this.RbDNSDHCP.Location = new System.Drawing.Point(9, 3);
-            this.RbDNSDHCP.Name = "RbDNSDHCP";
-            this.RbDNSDHCP.Size = new System.Drawing.Size(218, 17);
-            this.RbDNSDHCP.TabIndex = 9;
-            this.RbDNSDHCP.TabStop = true;
-            this.RbDNSDHCP.Tag = "dns";
-            this.RbDNSDHCP.Text = "Obtain DNS server address automatically";
-            this.RbDNSDHCP.UseVisualStyleBackColor = true;
-            this.RbDNSDHCP.CheckedChanged += new System.EventHandler(this.RbDNSDHCP_CheckedChanged);
-            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(12, 34);
@@ -312,41 +343,33 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Settings";
             // 
-            // panel1
+            // btnSafe
             // 
-            this.panel1.Controls.Add(this.RbDHCP);
-            this.panel1.Controls.Add(this.gbStaticIP);
-            this.panel1.Location = new System.Drawing.Point(14, 104);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(353, 188);
-            this.panel1.TabIndex = 19;
+            this.btnSafe.Location = new System.Drawing.Point(1091, 313);
+            this.btnSafe.Name = "btnSafe";
+            this.btnSafe.Size = new System.Drawing.Size(75, 23);
+            this.btnSafe.TabIndex = 12;
+            this.btnSafe.Text = "Save";
+            this.btnSafe.UseVisualStyleBackColor = true;
+            this.btnSafe.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // panel2
+            // bntLoad
             // 
-            this.panel2.Controls.Add(this.RbDNSDHCP);
-            this.panel2.Controls.Add(this.groupBox3);
-            this.panel2.Location = new System.Drawing.Point(14, 298);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(353, 189);
-            this.panel2.TabIndex = 20;
-            // 
-            // ip
-            // 
-            this.ip.HeaderText = "Address";
-            this.ip.Name = "ip";
-            this.ip.Width = 120;
-            // 
-            // Subnet
-            // 
-            this.Subnet.HeaderText = "Subnet";
-            this.Subnet.Name = "Subnet";
-            this.Subnet.Width = 120;
+            this.bntLoad.Location = new System.Drawing.Point(1091, 342);
+            this.bntLoad.Name = "bntLoad";
+            this.bntLoad.Size = new System.Drawing.Size(75, 23);
+            this.bntLoad.TabIndex = 13;
+            this.bntLoad.Text = "Load";
+            this.bntLoad.UseVisualStyleBackColor = true;
+            this.bntLoad.Click += new System.EventHandler(this.bntLoad_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1217, 565);
+            this.Controls.Add(this.bntLoad);
+            this.Controls.Add(this.btnSafe);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.groupBox2);
@@ -361,15 +384,15 @@
             this.gbStaticIP.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,6 +428,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ip;
         private System.Windows.Forms.DataGridViewTextBoxColumn Subnet;
+        private System.Windows.Forms.Button btnSafe;
+        private System.Windows.Forms.Button bntLoad;
     }
 }
 
