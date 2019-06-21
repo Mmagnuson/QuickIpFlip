@@ -49,7 +49,8 @@ namespace QuickIp
                 if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                 {
                     //  Console.WriteLine(ni.Name);
-                    textBox1.Text = textBox1.Text + ni.Name + Environment.NewLine;
+                    textBox1.Text = textBox1.Text + ni.Name + "  " + ni.Description   +  Environment.NewLine;
+                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType + "  fdsf "  + Environment.NewLine;
                     foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -70,18 +71,26 @@ namespace QuickIp
                 if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                 {
                     string DHCPStatus = "";
+                   
+
+                   
+
+                    textBox1.Text = textBox1.Text + ni.Name + Environment.NewLine + ni.Description + Environment.NewLine;
+                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType +  Environment.NewLine;
+
+                   
+
                     if (ni.GetIPProperties().DhcpServerAddresses.Count() > 0)
                     {
-                        DHCPStatus = "DHCP";
+                        textBox1.Text = textBox1.Text + "(DHCP)" + Environment.NewLine;
                     }
 
-                    textBox1.Text = textBox1.Text + ni.Name + " " + DHCPStatus + Environment.NewLine;
 
                     foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            textBox1.Text = textBox1.Text + ip.Address.ToString() + Environment.NewLine;
+                            textBox1.Text = textBox1.Text + ip.Address.ToString() +  "   " + ip.IPv4Mask.ToString()  +  Environment.NewLine;
                             //  Console.WriteLine(ip.Address.ToString());
                         }
                     }
@@ -144,6 +153,8 @@ namespace QuickIp
             var p = pl.Load();
 
             pl.Apply(p);
+
+            
 
             int xxx = 0;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management;
 
 //this class taken directly from
@@ -14,7 +15,6 @@ namespace QuickIp
     {
         private static ManagementObjectCollection getOC()
         {
-            
             ManagementObjectSearcher objMC = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = 'TRUE'");
             //   ManagementObjectSearcher objMC = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration ");
             return objMC.Get();
@@ -71,7 +71,6 @@ namespace QuickIp
                     {
                         try
                         {
-                            
                             ManagementBaseObject EnableDHCPParams = objMO.GetMethodParameters("EnableDHCP");
                             var returnCodeObj = objMO.InvokeMethod("EnableDHCP", EnableDHCPParams, null);
                             //var tmp = Convert.ToInt32(returnCodeObj.Properties["ReturnValue"].Value); //return value that handles the response code of the action.
@@ -105,8 +104,6 @@ namespace QuickIp
                 {
                     try
                     {
-
-                       
                         ManagementBaseObject setIP;
                         ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
 
@@ -125,11 +122,33 @@ namespace QuickIp
             }
         }
 
+        public static void setIP(string NIC, List<QuickIp.Profiles.IPAddress> ipList)
+        {
+            var objMOC = getOC();
 
+            foreach (ManagementObject objMO in objMOC)
+            {
+                if (objMO["MACAddress"].Equals(NIC))
+                {
+                    try
+                    {
+                        ManagementBaseObject setIP;
+                        ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
 
+                        newIP["IPAddress"] = ipList.Select(l => l.IpAddress).ToList().ToArray();
+                        newIP["SubnetMask"] = ipList.Select(l => l.SubnetMask).ToList().ToArray();
 
+                        setIP = objMO.InvokeMethod("EnableStatic", newIP, null);
 
-
+                        int yy = 0;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Set's a new Gateway address of the local machine

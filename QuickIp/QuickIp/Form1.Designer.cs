@@ -94,7 +94,7 @@
             this.textBox1.Location = new System.Drawing.Point(6, 19);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(263, 509);
+            this.textBox1.Size = new System.Drawing.Size(290, 509);
             this.textBox1.TabIndex = 2;
             // 
             // btnDHCP
@@ -338,7 +338,7 @@
             this.groupBox4.Controls.Add(this.textBox1);
             this.groupBox4.Location = new System.Drawing.Point(689, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(287, 543);
+            this.groupBox4.Size = new System.Drawing.Size(307, 543);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Settings";

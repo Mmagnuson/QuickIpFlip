@@ -56,6 +56,7 @@ namespace QuickIp.Profiles
                 }
                 else
                 {
+                    NetworkManagement.setIP(p.MAC, p.IP);
                 }
             }
             else
