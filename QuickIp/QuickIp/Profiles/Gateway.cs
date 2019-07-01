@@ -22,5 +22,18 @@
             DefaultIPGateway = defaultGateway;
         }
 
+        public override bool Equals(System.Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Gateway p = (Gateway)obj;
+                return (DefaultIPGateway == p.DefaultIPGateway) && (GatewayCostMetric == p.GatewayCostMetric) ;
+            }
+        }
+
     }
 }

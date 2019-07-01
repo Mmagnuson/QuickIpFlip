@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace QuickIp.Profiles
 {
@@ -7,10 +8,12 @@ namespace QuickIp.Profiles
         public bool DHCP;
         public string MAC;
         public string Description;
+        public string File;
 
         public List<DomainNameServer> DNS;
         public List<Gateway> DefaultGateway;
         public List<IPAddress> IP;
+
 
         public Profile()
         {
@@ -18,6 +21,28 @@ namespace QuickIp.Profiles
             DNS = new List<DomainNameServer>();
             DefaultGateway = new List<Gateway>();
             IP = new List<IPAddress>();
+        }
+
+
+        public override string ToString()
+        {
+            return Description;
+        }
+
+
+        public override bool Equals(System.Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+
+               
+                Profile p = (Profile)obj;
+                return ( Description == p.Description) && (DHCP == p.DHCP) && (MAC == p.MAC) && DNS.SequenceEqual(p.DNS) && DefaultGateway.SequenceEqual(p.DefaultGateway);
+            }
         }
     }
 }

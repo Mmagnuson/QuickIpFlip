@@ -34,7 +34,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnDHCP = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbProfiles = new System.Windows.Forms.ListBox();
             this.dgIp = new System.Windows.Forms.DataGridView();
             this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Subnet = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -110,15 +110,17 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // listBox1
+            // lbProfiles
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 63);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(225, 472);
-            this.listBox1.TabIndex = 5;
+            this.lbProfiles.FormattingEnabled = true;
+            this.lbProfiles.Location = new System.Drawing.Point(12, 63);
+            this.lbProfiles.Name = "lbProfiles";
+            this.lbProfiles.Size = new System.Drawing.Size(225, 472);
+            this.lbProfiles.TabIndex = 5;
+            this.lbProfiles.SelectedIndexChanged += new System.EventHandler(this.LbProfiles_SelectedIndexChanged);
             // 
             // dgIp
             // 
@@ -373,7 +375,7 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lbProfiles);
             this.Controls.Add(this.btnDHCP);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnStaticTest);
@@ -405,7 +407,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnDHCP;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbProfiles;
         private System.Windows.Forms.DataGridView dgIp;
         private System.Windows.Forms.GroupBox gbStaticIP;
         private System.Windows.Forms.RadioButton RbStaticIP;

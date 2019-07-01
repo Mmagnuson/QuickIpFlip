@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace QuickIp.Profiles
 {
@@ -10,7 +11,6 @@ namespace QuickIp.Profiles
         public Profile Load()
         {
             //  var appPath = System.IO.Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-
             // JsonConvert.DeserializeObject<List<CoordinatePolygon>>(fileData)
 
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -21,6 +21,35 @@ namespace QuickIp.Profiles
 
             return p;
         }
+
+        public List<Profile> LoadProfilesInDirectory()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var separator = Path.DirectorySeparatorChar;
+            string[] fileEntries = Directory.GetFiles(docPath + separator + "IpSettings", "*.ip");
+
+            List<Profile> profileList = new List<Profile>();
+
+            foreach (var filePath in fileEntries)
+            {
+                try
+                {
+                    var fileData = File.ReadAllText(filePath);
+                    Profile p = JsonConvert.DeserializeObject<Profile>(fileData);
+                    p.File = filePath;
+                    profileList.Add(p);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return profileList;
+        }
+
+
+
 
         public bool Save(Profile p)
         {
@@ -64,5 +93,7 @@ namespace QuickIp.Profiles
                 int yy = 0;
             }
         }
+
+    
     }
 }

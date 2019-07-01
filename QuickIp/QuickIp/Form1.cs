@@ -10,9 +10,14 @@ namespace QuickIp
 {
     public partial class Form1 : Form
     {
+        public List<Profile> ProfileList;
+        public Profile ProfileSelected;
+
         public Form1()
         {
             InitializeComponent();
+            ProfileList = new List<Profile>();
+            ProfileSelected = new Profile();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,8 +54,8 @@ namespace QuickIp
                 if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                 {
                     //  Console.WriteLine(ni.Name);
-                    textBox1.Text = textBox1.Text + ni.Name + "  " + ni.Description   +  Environment.NewLine;
-                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType + "  fdsf "  + Environment.NewLine;
+                    textBox1.Text = textBox1.Text + ni.Name + "  " + ni.Description + Environment.NewLine;
+                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType + "  fdsf " + Environment.NewLine;
                     foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -71,31 +76,38 @@ namespace QuickIp
                 if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                 {
                     string DHCPStatus = "";
-                   
-
-                   
 
                     textBox1.Text = textBox1.Text + ni.Name + Environment.NewLine + ni.Description + Environment.NewLine;
-                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType +  Environment.NewLine;
-
-                   
+                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType + Environment.NewLine;
 
                     if (ni.GetIPProperties().DhcpServerAddresses.Count() > 0)
                     {
                         textBox1.Text = textBox1.Text + "(DHCP)" + Environment.NewLine;
                     }
 
-
                     foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            textBox1.Text = textBox1.Text + ip.Address.ToString() +  "   " + ip.IPv4Mask.ToString()  +  Environment.NewLine;
+                            textBox1.Text = textBox1.Text + ip.Address.ToString() + "   " + ip.IPv4Mask.ToString() + Environment.NewLine;
                             //  Console.WriteLine(ip.Address.ToString());
                         }
                     }
 
                     textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine;
+                }
+            }
+
+            ProfileLoader pl = new ProfileLoader();
+            var pList = pl.LoadProfilesInDirectory();
+
+            if (!(pList.SequenceEqual(ProfileList) && pList.Count == ProfileList.Count))
+            {
+                ProfileList = pList; 
+                lbProfiles.Items.Clear();
+                foreach (var p in ProfileList)
+                {
+                    lbProfiles.Items.Add(p);
                 }
             }
         }
@@ -136,12 +148,12 @@ namespace QuickIp
         {
             Profile p = new Profile();
             p.MAC = "2C:4D:54:EA:22:75";
-            p.Description = "Test Profile";
-            p.DHCP = false;
-            p.DNS.Add(new DomainNameServer("8.8.8.8"));
-            p.DefaultGateway.Add(new Gateway("192.168.0.1"));
-            p.IP.Add(new IPAddress("192.168.0.25", "255.255.255.0"));
-            p.IP.Add(new IPAddress("172.16.20.1", "255.255.255.0"));
+            p.Description = "DHCP";
+            p.DHCP = true;
+            // p.DNS.Add(new DomainNameServer("8.8.8.8"));
+            //p.DefaultGateway.Add(new Gateway("192.168.0.1"));
+            // p.IP.Add(new IPAddress("192.168.0.25", "255.255.255.0"));
+            // p.IP.Add(new IPAddress("172.16.20.1", "255.255.255.0"));
 
             ProfileLoader pl = new ProfileLoader();
             pl.Save(p);
@@ -151,12 +163,35 @@ namespace QuickIp
         {
             ProfileLoader pl = new ProfileLoader();
             var p = pl.Load();
-
             pl.Apply(p);
 
-            
-
             int xxx = 0;
+        }
+
+        private void LbProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbProfiles.SelectedItem != null)
+            {
+                var p = (Profile)lbProfiles.SelectedItem;
+                ProfileSelected = p;
+
+
+                txtProfileName.Text = p.Description;
+
+                if (p.DHCP)
+                {
+                    RbDHCP.Checked = true;
+                    RbStaticIP.Checked = false;
+                }
+                else
+                {
+                    RbDHCP.Checked = false;
+                    RbStaticIP.Checked = true;
+                }
+
+
+              //  MessageBox.Show(p.MAC.ToString());
+            }
         }
     }
 }
