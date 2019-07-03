@@ -16,5 +16,18 @@
             IpAddress = ipAddress;
             SubnetMask = subnetMask;
         }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                IPAddress p = (IPAddress)obj;
+                return (IpAddress == p.IpAddress) && (SubnetMask == p.SubnetMask);
+            }
+        }
     }
 }

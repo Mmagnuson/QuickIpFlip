@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace QuickIp.Profiles
 {
@@ -16,9 +15,7 @@ namespace QuickIp.Profiles
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var separator = Path.DirectorySeparatorChar;
             var fileData = File.ReadAllText(docPath + separator + "IpSettings" + separator + "WriteLines.txt");
-
             var p = JsonConvert.DeserializeObject<Profile>(fileData);
-
             return p;
         }
 
@@ -36,7 +33,7 @@ namespace QuickIp.Profiles
                 {
                     var fileData = File.ReadAllText(filePath);
                     Profile p = JsonConvert.DeserializeObject<Profile>(fileData);
-                    p.File = filePath;
+                    p.Path = filePath;
                     profileList.Add(p);
                 }
                 catch (Exception ex)
@@ -47,9 +44,6 @@ namespace QuickIp.Profiles
 
             return profileList;
         }
-
-
-
 
         public bool Save(Profile p)
         {
@@ -93,7 +87,5 @@ namespace QuickIp.Profiles
                 int yy = 0;
             }
         }
-
-    
     }
 }

@@ -29,36 +29,39 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnStaticTest = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnDHCP = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lbProfiles = new System.Windows.Forms.ListBox();
             this.dgIp = new System.Windows.Forms.DataGridView();
-            this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Subnet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbStaticIP = new System.Windows.Forms.GroupBox();
             this.RbStaticIP = new System.Windows.Forms.RadioButton();
             this.RbDHCP = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.bntNew = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.RbDNSDHCP = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.RbDNSStatic = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnApply = new System.Windows.Forms.Button();
             this.txtProfileName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblNetworkCard = new System.Windows.Forms.Label();
             this.cmbNetworkcards = new System.Windows.Forms.ComboBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnSafe = new System.Windows.Forms.Button();
-            this.bntLoad = new System.Windows.Forms.Button();
+            this.btnDNSAdd = new System.Windows.Forms.Button();
+            this.bntDNSRemove = new System.Windows.Forms.Button();
+            this.btnIPRemove = new System.Windows.Forms.Button();
+            this.btnIPAdd = new System.Windows.Forms.Button();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Subnet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgIp)).BeginInit();
             this.gbStaticIP.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -69,26 +72,6 @@
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnStaticTest
-            // 
-            this.btnStaticTest.Location = new System.Drawing.Point(1117, 189);
-            this.btnStaticTest.Name = "btnStaticTest";
-            this.btnStaticTest.Size = new System.Drawing.Size(75, 23);
-            this.btnStaticTest.TabIndex = 0;
-            this.btnStaticTest.Text = "Static";
-            this.btnStaticTest.UseVisualStyleBackColor = true;
-            this.btnStaticTest.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1117, 248);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 19);
@@ -97,20 +80,10 @@
             this.textBox1.Size = new System.Drawing.Size(290, 509);
             this.textBox1.TabIndex = 2;
             // 
-            // btnDHCP
-            // 
-            this.btnDHCP.Location = new System.Drawing.Point(1108, 219);
-            this.btnDHCP.Name = "btnDHCP";
-            this.btnDHCP.Size = new System.Drawing.Size(75, 23);
-            this.btnDHCP.TabIndex = 3;
-            this.btnDHCP.Text = "DHCP";
-            this.btnDHCP.UseVisualStyleBackColor = true;
-            this.btnDHCP.Click += new System.EventHandler(this.btnDHCP_Click);
-            // 
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
+            this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lbProfiles
@@ -118,7 +91,7 @@
             this.lbProfiles.FormattingEnabled = true;
             this.lbProfiles.Location = new System.Drawing.Point(12, 63);
             this.lbProfiles.Name = "lbProfiles";
-            this.lbProfiles.Size = new System.Drawing.Size(225, 472);
+            this.lbProfiles.Size = new System.Drawing.Size(225, 173);
             this.lbProfiles.TabIndex = 5;
             this.lbProfiles.SelectedIndexChanged += new System.EventHandler(this.LbProfiles_SelectedIndexChanged);
             // 
@@ -131,23 +104,13 @@
             this.dgIp.Enabled = false;
             this.dgIp.Location = new System.Drawing.Point(18, 32);
             this.dgIp.Name = "dgIp";
-            this.dgIp.Size = new System.Drawing.Size(300, 105);
+            this.dgIp.Size = new System.Drawing.Size(300, 88);
             this.dgIp.TabIndex = 6;
-            // 
-            // ip
-            // 
-            this.ip.HeaderText = "Address";
-            this.ip.Name = "ip";
-            this.ip.Width = 120;
-            // 
-            // Subnet
-            // 
-            this.Subnet.HeaderText = "Subnet";
-            this.Subnet.Name = "Subnet";
-            this.Subnet.Width = 120;
             // 
             // gbStaticIP
             // 
+            this.gbStaticIP.Controls.Add(this.btnIPAdd);
+            this.gbStaticIP.Controls.Add(this.btnIPRemove);
             this.gbStaticIP.Controls.Add(this.RbStaticIP);
             this.gbStaticIP.Controls.Add(this.dgIp);
             this.gbStaticIP.Location = new System.Drawing.Point(3, 27);
@@ -168,7 +131,7 @@
             this.RbStaticIP.Tag = "ip";
             this.RbStaticIP.Text = "Use the following ip address or addresses";
             this.RbStaticIP.UseVisualStyleBackColor = true;
-            this.RbStaticIP.CheckedChanged += new System.EventHandler(this.RbStaticIP_CheckedChanged);
+            this.RbStaticIP.Click += new System.EventHandler(this.RbStaticIP_Click);
             // 
             // RbDHCP
             // 
@@ -183,15 +146,16 @@
             this.RbDHCP.Text = "Obtain ip address automatically (DHCP)";
             this.RbDHCP.UseCompatibleTextRendering = true;
             this.RbDHCP.UseVisualStyleBackColor = true;
-            this.RbDHCP.CheckedChanged += new System.EventHandler(this.RbDHCP_CheckedChanged);
+            this.RbDHCP.Click += new System.EventHandler(this.RbDHCP_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.bntNew);
             this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.panel1);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.btnDelete);
+            this.groupBox2.Controls.Add(this.btnSave);
+            this.groupBox2.Controls.Add(this.btnApply);
             this.groupBox2.Controls.Add(this.txtProfileName);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.lblNetworkCard);
@@ -202,6 +166,16 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Profile";
+            // 
+            // bntNew
+            // 
+            this.bntNew.Location = new System.Drawing.Point(14, 493);
+            this.bntNew.Name = "bntNew";
+            this.bntNew.Size = new System.Drawing.Size(80, 35);
+            this.bntNew.TabIndex = 21;
+            this.bntNew.Text = "New";
+            this.bntNew.UseVisualStyleBackColor = true;
+            this.bntNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // panel2
             // 
@@ -224,10 +198,12 @@
             this.RbDNSDHCP.Tag = "dns";
             this.RbDNSDHCP.Text = "Obtain DNS server address automatically";
             this.RbDNSDHCP.UseVisualStyleBackColor = true;
-            this.RbDNSDHCP.CheckedChanged += new System.EventHandler(this.RbDNSDHCP_CheckedChanged);
+            this.RbDNSDHCP.Click += new System.EventHandler(this.RbDNSDHCP_Click);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.bntDNSRemove);
+            this.groupBox3.Controls.Add(this.btnDNSAdd);
             this.groupBox3.Controls.Add(this.dataGridView2);
             this.groupBox3.Controls.Add(this.RbDNSStatic);
             this.groupBox3.Location = new System.Drawing.Point(3, 26);
@@ -242,7 +218,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(18, 32);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(300, 105);
+            this.dataGridView2.Size = new System.Drawing.Size(300, 84);
             this.dataGridView2.TabIndex = 6;
             // 
             // RbDNSStatic
@@ -256,7 +232,7 @@
             this.RbDNSStatic.Tag = "dns";
             this.RbDNSStatic.Text = "Use the following DNS server addresses";
             this.RbDNSStatic.UseVisualStyleBackColor = true;
-            this.RbDNSStatic.CheckedChanged += new System.EventHandler(this.RbDNSStatic_CheckedChanged);
+            this.RbDNSStatic.Click += new System.EventHandler(this.RbDNSStatic_Click);
             // 
             // panel1
             // 
@@ -267,33 +243,36 @@
             this.panel1.Size = new System.Drawing.Size(353, 188);
             this.panel1.TabIndex = 19;
             // 
-            // button4
+            // btnDelete
             // 
-            this.button4.Location = new System.Drawing.Point(14, 493);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(80, 35);
-            this.button4.TabIndex = 18;
-            this.button4.Text = "Delete";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnDelete.Location = new System.Drawing.Point(100, 493);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(80, 35);
+            this.btnDelete.TabIndex = 18;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // button1
+            // btnSave
             // 
-            this.button1.Location = new System.Drawing.Point(116, 493);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 35);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSave.Enabled = false;
+            this.btnSave.Location = new System.Drawing.Point(186, 493);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(80, 35);
+            this.btnSave.TabIndex = 16;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // button3
+            // btnApply
             // 
-            this.button3.Location = new System.Drawing.Point(271, 493);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(84, 35);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Apply";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.UseWaitCursor = true;
+            this.btnApply.Location = new System.Drawing.Point(283, 493);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(84, 35);
+            this.btnApply.TabIndex = 17;
+            this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.bntApply_Click);
             // 
             // txtProfileName
             // 
@@ -338,49 +317,88 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.textBox1);
-            this.groupBox4.Location = new System.Drawing.Point(689, 12);
+            this.groupBox4.Location = new System.Drawing.Point(632, 12);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(307, 543);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Settings";
             // 
-            // btnSafe
+            // btnDNSAdd
             // 
-            this.btnSafe.Location = new System.Drawing.Point(1091, 313);
-            this.btnSafe.Name = "btnSafe";
-            this.btnSafe.Size = new System.Drawing.Size(75, 23);
-            this.btnSafe.TabIndex = 12;
-            this.btnSafe.Text = "Save";
-            this.btnSafe.UseVisualStyleBackColor = true;
-            this.btnSafe.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnDNSAdd.Location = new System.Drawing.Point(256, 122);
+            this.btnDNSAdd.Name = "btnDNSAdd";
+            this.btnDNSAdd.Size = new System.Drawing.Size(62, 23);
+            this.btnDNSAdd.TabIndex = 22;
+            this.btnDNSAdd.Text = "Add";
+            this.btnDNSAdd.UseVisualStyleBackColor = true;
             // 
-            // bntLoad
+            // bntDNSRemove
             // 
-            this.bntLoad.Location = new System.Drawing.Point(1091, 342);
-            this.bntLoad.Name = "bntLoad";
-            this.bntLoad.Size = new System.Drawing.Size(75, 23);
-            this.bntLoad.TabIndex = 13;
-            this.bntLoad.Text = "Load";
-            this.bntLoad.UseVisualStyleBackColor = true;
-            this.bntLoad.Click += new System.EventHandler(this.bntLoad_Click);
+            this.bntDNSRemove.Location = new System.Drawing.Point(187, 122);
+            this.bntDNSRemove.Name = "bntDNSRemove";
+            this.bntDNSRemove.Size = new System.Drawing.Size(62, 23);
+            this.bntDNSRemove.TabIndex = 23;
+            this.bntDNSRemove.Text = "Remove";
+            this.bntDNSRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnIPRemove
+            // 
+            this.btnIPRemove.Location = new System.Drawing.Point(187, 125);
+            this.btnIPRemove.Name = "btnIPRemove";
+            this.btnIPRemove.Size = new System.Drawing.Size(62, 23);
+            this.btnIPRemove.TabIndex = 24;
+            this.btnIPRemove.Text = "Remove";
+            this.btnIPRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnIPAdd
+            // 
+            this.btnIPAdd.Location = new System.Drawing.Point(256, 125);
+            this.btnIPAdd.Name = "btnIPAdd";
+            this.btnIPAdd.Size = new System.Drawing.Size(62, 23);
+            this.btnIPAdd.TabIndex = 24;
+            this.btnIPAdd.Text = "Add";
+            this.btnIPAdd.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(12, 295);
+            this.treeView1.Name = "treeView1";
+            treeNode1.Name = "IP";
+            treeNode1.Text = "Node0";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.treeView1.Size = new System.Drawing.Size(225, 245);
+            this.treeView1.TabIndex = 12;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1_AfterSelect);
+            // 
+            // ip
+            // 
+            dataGridViewCellStyle1.Format = "###.###.###.###";
+            dataGridViewCellStyle1.NullValue = null;
+            this.ip.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ip.HeaderText = "Address";
+            this.ip.Name = "ip";
+            this.ip.Width = 120;
+            // 
+            // Subnet
+            // 
+            this.Subnet.HeaderText = "Subnet";
+            this.Subnet.Name = "Subnet";
+            this.Subnet.Width = 120;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1217, 565);
-            this.Controls.Add(this.bntLoad);
-            this.Controls.Add(this.btnSafe);
+            this.ClientSize = new System.Drawing.Size(961, 565);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lbProfiles);
-            this.Controls.Add(this.btnDHCP);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.btnStaticTest);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Quick IP Flip";
             ((System.ComponentModel.ISupportInitialize)(this.dgIp)).EndInit();
             this.gbStaticIP.ResumeLayout(false);
             this.gbStaticIP.PerformLayout();
@@ -401,11 +419,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnStaticTest;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btnDHCP;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ListBox lbProfiles;
         private System.Windows.Forms.DataGridView dgIp;
@@ -413,11 +427,9 @@
         private System.Windows.Forms.RadioButton RbStaticIP;
         private System.Windows.Forms.RadioButton RbDHCP;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox txtProfileName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Label lblNetworkCard;
         private System.Windows.Forms.ComboBox cmbNetworkcards;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -428,10 +440,16 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button bntNew;
+        private System.Windows.Forms.TextBox txtProfileName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnIPAdd;
+        private System.Windows.Forms.Button btnIPRemove;
+        private System.Windows.Forms.Button bntDNSRemove;
+        private System.Windows.Forms.Button btnDNSAdd;
+        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ip;
         private System.Windows.Forms.DataGridViewTextBoxColumn Subnet;
-        private System.Windows.Forms.Button btnSafe;
-        private System.Windows.Forms.Button bntLoad;
     }
 }
 

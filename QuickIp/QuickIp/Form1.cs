@@ -1,6 +1,7 @@
 ﻿using QuickIp.Profiles;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Principal;
@@ -20,16 +21,7 @@ namespace QuickIp
             ProfileSelected = new Profile();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var bb = IsRunAsAdmin();
-
-            Dictionary<string, string> nics = NetworkManagement.getNetworkcardDescriptionAndMacAddresses();
-            var xxx = nics.ToArray();
-            NetworkManagement.setGateway(xxx[0].Key, "192.168.0.1");
-
-            NetworkManagement.setIP(xxx[0].Key, "192.168.0.10", "255.255.255.0");
-        }
+      
 
         private void btnDHCP_Click(object sender, EventArgs e)
         {
@@ -42,35 +34,26 @@ namespace QuickIp
         {
             WindowsIdentity id = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(id);
-
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                {
-                    //  Console.WriteLine(ni.Name);
-                    textBox1.Text = textBox1.Text + ni.Name + "  " + ni.Description + Environment.NewLine;
-                    textBox1.Text = textBox1.Text + ni.NetworkInterfaceType + "  fdsf " + Environment.NewLine;
-                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        {
-                            textBox1.Text = textBox1.Text + ip.Address.ToString() + Environment.NewLine;
-                            //  Console.WriteLine(ip.Address.ToString());
-                        }
-                    }
-                }
-            }
-        }
+      
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             textBox1.Text = "";
+
+            //if (cmbNetworkcards.Items.Count <= 0)
+            //{
+            //    foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            //    {
+            //        if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+            //        {
+            //            cmbNetworkcards.Items.Add(ni.Name + " " + ni.OperationalStatus.ToString());
+            //        }
+            //    }
+            //}
+
             foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
@@ -98,30 +81,33 @@ namespace QuickIp
                 }
             }
 
-            ProfileLoader pl = new ProfileLoader();
-            var pList = pl.LoadProfilesInDirectory();
 
-            if (!(pList.SequenceEqual(ProfileList) && pList.Count == ProfileList.Count))
-            {
-                ProfileList = pList; 
-                lbProfiles.Items.Clear();
-                foreach (var p in ProfileList)
-                {
-                    lbProfiles.Items.Add(p);
-                }
-            }
+
+            // ProfileLoader pl = new ProfileLoader();
+            //  var pList = pl.LoadProfilesInDirectory();
+
+            //if (!(pList.SequenceEqual(ProfileList) && pList.Count == ProfileList.Count))
+            //{
+            //    ProfileList = pList;
+            //    lbProfiles.Items.Clear();
+            //    foreach (var p in ProfileList)
+            //    {
+            //        lbProfiles.Items.Add(p);
+            //    }
+            //}
         }
 
-        private void RbDHCP_CheckedChanged(object sender, EventArgs e)
+        private void RbDHCP_Click(object sender, EventArgs e)
         {
             if (RbDHCP.Checked)
             {
                 RbStaticIP.Checked = false;
                 dgIp.Enabled = false;
+                RbDNSDHCP.Enabled = true;
             }
         }
 
-        private void RbStaticIP_CheckedChanged(object sender, EventArgs e)
+        private void RbStaticIP_Click(object sender, EventArgs e)
         {
             if (RbStaticIP.Checked)
             {
@@ -129,22 +115,71 @@ namespace QuickIp
                 RbDNSDHCP.Checked = false;
                 RbDNSStatic.Checked = true;
                 dgIp.Enabled = true;
+                RbDNSDHCP.Enabled = false;
             }
         }
 
-        private void RbDNSDHCP_CheckedChanged(object sender, EventArgs e)
+        private void RbDNSDHCP_Click(object sender, EventArgs e)
         {
-            if (RbDNSDHCP.Checked)
+            if (!RbStaticIP.Checked)
             {
                 RbDNSStatic.Checked = false;
+                RbDNSDHCP.Checked = true;
             }
         }
 
-        private void RbDNSStatic_CheckedChanged(object sender, EventArgs e)
+        private void RbDNSStatic_Click(object sender, EventArgs e)
         {
+            RbDNSDHCP.Checked = false;
+            RbDNSStatic.Checked = true;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+  
+
+        private void LbProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbProfiles.SelectedItem != null)
+            {
+                var p = (Profile)lbProfiles.SelectedItem;
+                ProfileSelected = p;
+                UpdateSettings();
+
+
+            }
+        }
+
+        public void UpdateSettings()
+        {
+            txtProfileName.Text = ProfileSelected.Description;
+
+            if (ProfileSelected.DHCP)
+            {
+
+                RbDHCP.Checked = true;
+                RbStaticIP.Checked = false;
+                dgIp.Enabled = false;
+                RbDNSDHCP.Enabled = true;
+
+            }
+            else
+            {
+                RbStaticIP.Checked = true;
+                RbDHCP.Checked = false;
+                RbDNSDHCP.Checked = false;
+                RbDNSStatic.Checked = true;
+                dgIp.Enabled = true;
+                RbDNSDHCP.Enabled = false;
+            }
+            if (ProfileSelected.DNS.Count > 0)
+            {
+
+            }
+
+        }
+
+
+
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             Profile p = new Profile();
             p.MAC = "2C:4D:54:EA:22:75";
@@ -159,39 +194,35 @@ namespace QuickIp
             pl.Save(p);
         }
 
-        private void bntLoad_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            ProfileLoader pl = new ProfileLoader();
-            var p = pl.Load();
-            pl.Apply(p);
-
-            int xxx = 0;
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete: " + ProfileSelected.Description, "Delete Ip Profile", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (File.Exists(ProfileSelected.Path))
+                {
+                    // If file found, delete it
+                    File.Delete(ProfileSelected.Path);
+                }
+            }
         }
 
-        private void LbProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void bntApply_Click(object sender, EventArgs e)
         {
-            if (lbProfiles.SelectedItem != null)
-            {
-                var p = (Profile)lbProfiles.SelectedItem;
-                ProfileSelected = p;
+            ProfileLoader pl = new ProfileLoader();
+            pl.Apply(ProfileSelected);
+        }
 
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            ProfileSelected = new Profile();
+            ProfileSelected.DHCP = true;
+            UpdateSettings();
+        }
 
-                txtProfileName.Text = p.Description;
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
 
-                if (p.DHCP)
-                {
-                    RbDHCP.Checked = true;
-                    RbStaticIP.Checked = false;
-                }
-                else
-                {
-                    RbDHCP.Checked = false;
-                    RbStaticIP.Checked = true;
-                }
-
-
-              //  MessageBox.Show(p.MAC.ToString());
-            }
         }
     }
 }

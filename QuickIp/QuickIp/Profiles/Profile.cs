@@ -8,7 +8,7 @@ namespace QuickIp.Profiles
         public bool DHCP;
         public string MAC;
         public string Description;
-        public string File;
+        public string Path;
 
         public List<DomainNameServer> DNS;
         public List<Gateway> DefaultGateway;
@@ -41,7 +41,7 @@ namespace QuickIp.Profiles
 
                
                 Profile p = (Profile)obj;
-                return ( Description == p.Description) && (DHCP == p.DHCP) && (MAC == p.MAC) && DNS.SequenceEqual(p.DNS) && DefaultGateway.SequenceEqual(p.DefaultGateway);
+                return ( Description == p.Description) && (DHCP == p.DHCP) && (MAC == p.MAC) && DNS.SequenceEqual(p.DNS) && DefaultGateway.SequenceEqual(p.DefaultGateway) &&  IP.SequenceEqual(p.IP);
             }
         }
     }
